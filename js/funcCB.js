@@ -1,4 +1,5 @@
 function combineDB(arrayBuffer) {
+	var max=db.prepare("SELECT max(id) FROM 'item' GROUP BY id");
 	var dba = new SQL.Database(new Uint8Array(arrayBuffer));
 	var tables = dba.prepare("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name");
 	/////////
@@ -17,9 +18,9 @@ function combineDB(arrayBuffer) {
 		while (sel.step()) {
 			var s = sel.get();
 		
-			var query2 = "INSERT INTO "+name+" values(";
+			var query2 = "INSERT INTO "+name+" values("+(maxx++)+",";
 		
-			for (var i = 0; i < s.length; i++) {
+			for (var i = 1; i < s.length; i++) {
 					  query2+="'"+s[i]+"',";
 			}
 			query2=query2.replace(/.$/,")")
