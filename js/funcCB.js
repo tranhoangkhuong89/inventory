@@ -1,4 +1,4 @@
-function combineCB(arrayBuffer) {
+function combineDB(arrayBuffer) {
 	var dba = new SQL.Database(new Uint8Array(arrayBuffer));
 	var tables = dba.prepare("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name");
 	/////////
