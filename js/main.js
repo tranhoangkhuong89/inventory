@@ -115,10 +115,13 @@ if (loadUrlDB == null) {
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 	var ur='/Dropbox/DotNetApi/';
-	
+	var listPath;
 	dbx.filesListFolder({path: ur})
 		.then(function(response) {
-			var a=response;
+			var a=response.entries;
+			foreach(var i in a){
+				listPath.push(i.path_lower);
+			}
 			//var reader = new FileReader();
 			//reader.onload = function(event) {
     				//var arrayBuffer = event.target.result;
