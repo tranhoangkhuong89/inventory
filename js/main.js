@@ -121,6 +121,7 @@ if (loadUrlDB == null) {
 			var a=response.entries;
 			a.forEach(function(i){
 				listPath.push(i.path_lower);
+				var b="abc";
 			});
 			var b="abc";
 			//var reader = new FileReader();
