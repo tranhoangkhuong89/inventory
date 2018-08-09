@@ -152,6 +152,7 @@ if (loadUrlDB == null) {
 								combineDB(arrayBuffer);
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
+							renderQuery("select * from order");
 						})
 						.catch(function(error) {
 							console.log(error);
