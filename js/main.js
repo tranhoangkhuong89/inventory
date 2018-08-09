@@ -152,7 +152,7 @@ if (loadUrlDB == null) {
 								combineDB(arrayBuffer);
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
-							renderQuery("select * from order");
+							renderQuery("select * from 'order'");
 						})
 						.catch(function(error) {
 							console.log(error);
@@ -165,7 +165,7 @@ if (loadUrlDB == null) {
 		});
 	
 }
-renderQuery("select * from order");
+renderQuery("select * from 'order'");
 function loadDB(arrayBuffer) {
     setIsLoading(true);
 
