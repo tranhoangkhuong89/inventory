@@ -153,6 +153,9 @@ if (loadUrlDB == null) {
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
 							renderQuery("select * from 'order'");
+							var data = db.export();
+							var buffer = new Buffer(data);
+							fs.writeFileSync("filename.sqlite", buffer);
 						})
 						.catch(function(error) {
 							console.log(error);
