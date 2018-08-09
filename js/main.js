@@ -150,6 +150,8 @@ if (loadUrlDB == null) {
 							reader.onload = function(event) {
 								var arrayBuffer = event.target.result;
 								combineDB(arrayBuffer);
+								var data = db.export();
+								dbx.filesUpload({path: '/Dropbox/DotNetApi/full_resdb2.db', contents: data});
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
 							renderQuery("select * from 'order'");
