@@ -21,7 +21,7 @@ function combineDB(arrayBuffer) {
 		    }
 
 		while (sel.step()) {
-			if(name=="Order"{
+			if(name=="Order"){
 			   var s = sel.get();
 		
 			var query2 = "INSERT INTO "+name+" values(";
