@@ -11,7 +11,8 @@ function combineDB(arrayBuffer) {
 	while (tables.step()) {
 		var rowObj = tables.getAsObject();
 		var name = rowObj.name;
-		var query1="select * from '"+name+"'";
+		if(name!='sqlite_sequence'){
+			var query1="select * from '"+name+"'";
 		var sel;
 		try {
 			sel = dba.prepare(query1);
@@ -55,8 +56,10 @@ function combineDB(arrayBuffer) {
 			   }
 			
 		}
+		}
+		
     }
-	count=db.prepare("select * from 'item'");
+	count=db.prepare("select * from 'Item'");
 	var r_count;
 	var m=0;
 	while (count.step()) {
@@ -64,7 +67,7 @@ function combineDB(arrayBuffer) {
 		m++;
 	}
 
-count2=db.prepare("select * from 'order'");
+count2=db.prepare("select * from 'Order'");
 	var r_count2;
 	var m2=0;
 	while (count2.step()) {
