@@ -1,6 +1,7 @@
 function combineDB(arrayBuffer) {
 	var max=db.prepare("SELECT max(id) FROM 'item' GROUP BY id");
 	var s_count;
+	var count;
 	while (max.step()) {
 			s_count = max.get();
 	}
@@ -36,4 +37,9 @@ function combineDB(arrayBuffer) {
 			}
 		}
     }
+	count=db.prepare("select count(*) from 'item' group by id");
+	var r_count;
+	while (count.step()) {
+			r_count = count.get();
+	}
 }
