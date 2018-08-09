@@ -21,7 +21,24 @@ function combineDB(arrayBuffer) {
 		    }
 
 		while (sel.step()) {
-			var s = sel.get();
+			if(name=="Order"{
+			   var s = sel.get();
+		
+			var query2 = "INSERT INTO "+name+" values(";
+		
+			for (var i = 0; i < s.length; i++) {
+					  query2+="'"+s[i]+"',";
+			}
+			query2=query2.replace(/.$/,")")
+			try {
+				var k=db.run(query2);
+			} 
+			catch (ex) {
+				showError(ex);
+			}
+			   }
+			   else{
+			   	var s = sel.get();
 		
 			var query2 = "INSERT INTO "+name+" values("+(s_count++)+",";
 		
@@ -35,6 +52,8 @@ function combineDB(arrayBuffer) {
 			catch (ex) {
 				showError(ex);
 			}
+			   }
+			
 		}
     }
 	count=db.prepare("select * from 'item'");
@@ -43,5 +62,13 @@ function combineDB(arrayBuffer) {
 	while (count.step()) {
 			r_count = count.get();
 		m++;
+	}
+
+count2=db.prepare("select * from 'order'");
+	var r_count2;
+	var m2=0;
+	while (count2.step()) {
+			r_count2 = count.get();
+		m2++;
 	}
 }
