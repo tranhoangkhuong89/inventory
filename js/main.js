@@ -121,7 +121,18 @@ if (loadUrlDB == null) {
 			var a=response.entries;
 			a.forEach(function(i){
 				var b=i.path_lower;
-				listPath.push(i.path_lower);
+				dbx.filesDownload({path: b})
+					.then(function(response) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							var arrayBuffer = event.target.result;
+							loadDB(arrayBuffer);
+						};
+						reader.readAsArrayBuffer(response.fileBlob);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
 				
 			});
 			var b="abc";
@@ -136,18 +147,7 @@ if (loadUrlDB == null) {
 			console.log(error);
 		});
 	
-	dbx.filesDownload({path: listPath})
-		.then(function(response) {
-			var reader = new FileReader();
-			reader.onload = function(event) {
-    				var arrayBuffer = event.target.result;
-				loadDB(arrayBuffer);
-			};
-			reader.readAsArrayBuffer(response.fileBlob);
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
+	
 	
 	var c="abc";
 }
