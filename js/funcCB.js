@@ -11,7 +11,7 @@ function combineDB(arrayBuffer) {
 	while (tables.step()) {
 		var rowObj = tables.getAsObject();
 		var name = rowObj.name;
-		if(name!='sqlite_sequence'){
+		if(name!='sqlite_sequence'&&name!='TableO'){
 			var query1="select * from '"+name+"'";
 		var sel;
 		try {
