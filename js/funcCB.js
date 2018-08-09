@@ -20,7 +20,7 @@ function combineDB(arrayBuffer) {
 			var query2 = "INSERT INTO "+name+" values(";
 		
 			for (var i = 0; i < s.length; i++) {
-					  query+="'"+s[i]+"',";
+					  query2+="'"+s[i]+"',";
 			}
 			query2=query2.replace(/.$/,")")
 			try {
