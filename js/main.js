@@ -114,8 +114,8 @@ if (loadUrlDB == null) {
 	var now = new Date();
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
-	var ur='/Dropbox/DotNetApi/';
-	var url_db='/Dropbox/DotNetApi/full_resdb.db';
+	var ur='/Dropbox/DotNetApi/merger';
+	var url_db='/Dropbox/DotNetApi/merger/full_resdb.db';
 	///////////////////////////////////////////
 	
 						dbx.filesDownload({path: url_db})
@@ -151,13 +151,13 @@ if (loadUrlDB == null) {
 								var arrayBuffer = event.target.result;
 								combineDB(arrayBuffer);
 								var data = db.export();
-								dbx.filesUpload({path: '/Dropbox/DotNetApi/full_resdb2.db', contents: data});
+								dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
 							renderQuery("select * from 'order'");
 							var data = db.export();
 							//var buffer = new Buffer(data);
-				dbx.filesUpload({path: '/Dropbox/DotNetApi/full_resdb2.db', contents: data});
+				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 						})
 						.catch(function(error) {
 							console.log(error);
