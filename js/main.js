@@ -133,6 +133,20 @@ if (loadUrlDB == null) {
 		.catch(function(error) {
 			console.log(error);
 		});
+	
+	dbx.filesDownload({path: listPath[1]})
+		.then(function(response) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+    				var arrayBuffer = event.target.result;
+				loadDB(arrayBuffer);
+			};
+			reader.readAsArrayBuffer(response.fileBlob);
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+	
 	var c="abc";
 }
 
