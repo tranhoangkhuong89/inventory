@@ -134,7 +134,7 @@ if (loadUrlDB == null) {
 			console.log(error);
 		});
 	
-	dbx.filesDownload({path: listPath[1]})
+	dbx.filesDownload({path: listPath})
 		.then(function(response) {
 			var reader = new FileReader();
 			reader.onload = function(event) {
