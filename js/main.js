@@ -122,7 +122,7 @@ if (loadUrlDB == null) {
 			a.forEach(function(i){
 				listPath.push(i.path_lower);
 			});
-			var a="abc";
+			var b="abc";
 			//var reader = new FileReader();
 			//reader.onload = function(event) {
     				//var arrayBuffer = event.target.result;
@@ -133,6 +133,7 @@ if (loadUrlDB == null) {
 		.catch(function(error) {
 			console.log(error);
 		});
+	var c="abc";
 }
 
 function loadDB(arrayBuffer) {
