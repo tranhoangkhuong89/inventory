@@ -115,6 +115,27 @@ if (loadUrlDB == null) {
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 	var ur='/Dropbox/DotNetApi/';
+	///////////////////////////////////////////
+	if(b.indexOf("full_resdb.db")>0){
+						dbx.filesDownload({path: b})
+						.then(function(response) {
+							var reader = new FileReader();
+							reader.onload = function(event) {
+								var arrayBuffer = event.target.result;
+								try {
+								    db = new SQL.Database(new Uint8Array(arrayBuffer));
+								} catch (ex) {
+								    setIsLoading(false);
+								    alert(ex);
+								}
+							};
+							reader.readAsArrayBuffer(response.fileBlob);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+					}
+	///////////////////////////////////////////
 	var listPath=[];
 	dbx.filesListFolder({path: ur})
 		.then(function(response) {
@@ -122,18 +143,18 @@ if (loadUrlDB == null) {
 			a.forEach(function(i){
 				var b=i.path_lower;
 				if(b.indexOf("_resdb.db")>0){
-					dbx.filesDownload({path: b})
-					.then(function(response) {
-						var reader = new FileReader();
-						reader.onload = function(event) {
-							var arrayBuffer = event.target.result;
-							combineDB(arrayBuffer);
-						};
-						reader.readAsArrayBuffer(response.fileBlob);
-					})
-					.catch(function(error) {
-						console.log(error);
-					});
+						dbx.filesDownload({path: b})
+						.then(function(response) {
+							var reader = new FileReader();
+							reader.onload = function(event) {
+								var arrayBuffer = event.target.result;
+								combineDB(arrayBuffer);
+							};
+							reader.readAsArrayBuffer(response.fileBlob);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
 				}
 			});
 		})
