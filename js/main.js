@@ -119,9 +119,10 @@ if (loadUrlDB == null) {
 	dbx.filesListFolder({path: ur})
 		.then(function(response) {
 			var a=response.entries;
-			foreach(var i in a){
+			a.forEach(function(i){
 				listPath.push(i.path_lower);
-			}
+			});
+			
 			//var reader = new FileReader();
 			//reader.onload = function(event) {
     				//var arrayBuffer = event.target.result;
