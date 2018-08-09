@@ -24,7 +24,7 @@ function combineDB(arrayBuffer) {
 			}
 			query2=query2.replace(/.$/,")")
 			try {
-				sel = db.prepare(query2);
+				sel = db.run(query2);
 			} 
 			catch (ex) {
 				showError(ex);
