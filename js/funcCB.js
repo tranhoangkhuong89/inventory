@@ -37,9 +37,11 @@ function combineDB(arrayBuffer) {
 			}
 		}
     }
-	count=db.prepare("select count(*) from 'item' group by id");
+	count=db.prepare("select * from 'item'");
 	var r_count;
+	var m=0;
 	while (count.step()) {
 			r_count = count.get();
+		m++;
 	}
 }
