@@ -1,69 +1,34 @@
-function executeCB() {
-    var query @= "ATTACH DATABASE '/path/to/candidate/database' AS candidate;
-INSERT INTO some_table (uid, name) SELECT uid, name FROM candidate.User;
-DETACH DATABASE candidate;";
-    renderQueryCB(query);
-    $("#tables").select2("val", getTableNameFromQuery(query));
-}
-function renderQueryCB(query) {
-    var dataBox = $("#data");
-    var thead = dataBox.find("thead").find("tr");
-    var tbody = dataBox.find("tbody");
+function combineCB(arrayBuffer) {
+	var dba = new SQL.Database(new Uint8Array(arrayBuffer));
+	var tables = dba.prepare("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name");
+	/////////
+	while (tables.step()) {
+        var rowObj = tables.getAsObject();
+        var name = rowObj.name;
+	    var query1="select * from "+name;
+	    var sel;
+	    try {
+		sel = dba.prepare(query1);
+	    } 
+	    catch (ex) {
+		showError(ex);
+	    }
 
-    thead.empty();
-    tbody.empty();
-    errorBox.hide();
-    dataBox.show();
-	
-    var columnTypes = [];
-    var tableName = getTableNameFromQuery(query);
-    if (tableName != null) {
-        columnTypes = getTableColumnTypes(tableName);
+		while (sel.step()) {
+			var s = sel.get();
+		
+			var query2 = "INSERT INTO "+name+" values(";
+		
+			for (var i = 0; i < s.length; i++) {
+					  query+="'"+s[i]+"',";
+			}
+			query2=query2.replace(/.$/,")")
+			try {
+				sel = db.prepare(query2);
+			} 
+			catch (ex) {
+				showError(ex);
+			}
+		}
     }
-    var sel;
-    try {
-        sel = db.prepare(query);
-    } catch (ex) {
-        showError(ex);
-        return;
-    }
-    var addedColums = false;
-   var stt=1;
-   var total=0;
-    while (sel.step()) {
-        if (!addedColums) {
-            addedColums = true;
-		   thead.append('<th><span data-toggle="tooltip" data-placement="top" title="string">stt</span></th>');
-		   thead.append('<th><span data-toggle="tooltip" data-placement="top" title="string">table</span></th>');
-		   thead.append('<th><span data-toggle="tooltip" data-placement="top" title="string">sl</span></th>');
-		   thead.append('<th><span data-toggle="tooltip" data-placement="top" title="string">price</span></th>');
-        } 
-        var tr = $('<tr>');
-        var s = sel.get();
-        for (var i = 0; i < s.length; i++) {
-           if(i==0){
-               tr.append('<td><span title="' + htmlEncode(s[i]) + '">' + stt + '</span></td>');
-           }
-           else{
-              if(i==3){
-                 total+=s[i];
-                 tr.append('<td><span title="' + htmlEncode(s[i]) + '">' + htmlEncode(Number(s[i]).toLocaleString()) + '</span></td>');
-              }
-              else{
-                     tr.append('<td><span title="' + htmlEncode(s[i]) + '">' + htmlEncode(s[i]) + '</span></td>');
-                 }
-            }
-        }
-        tbody.append(tr);
-       stt++;
-    }
-	$('#total').text("Total: "+Number(total).toLocaleString());
-    refreshPagination(query, tableName);
-
-    $('[data-toggle="tooltip"]').tooltip({html: true});
-    dataBox.editableTableWidget();
-
-    setTimeout(function () {
-        positionFooter();
-    }, 100);
 }
