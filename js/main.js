@@ -154,7 +154,7 @@ if (loadUrlDB == null) {
 							reader.readAsArrayBuffer(response.fileBlob);
 							renderQuery("select * from 'order'");
 							var data = db.export();
-							var buffer = new Buffer(data);
+							//var buffer = new Buffer(data);
 				dbx.filesUpload({path: '/Dropbox/DotNetApi/full_resdb2.db', contents: data});
 						})
 						.catch(function(error) {
