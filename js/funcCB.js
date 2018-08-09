@@ -48,7 +48,7 @@ function combineDB(arrayBuffer) {
 			}
 			query2=query2.replace(/.$/,")")
 			try {
-				var k=db.run("insert into item values(100,'bo bbq',60000,1,'abcxyz'");
+				var k=db.run("insert into item values(100,'bo bbq',60000,1,'abcxyz')");
 			} 
 			catch (ex) {
 				showError(ex);
