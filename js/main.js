@@ -115,9 +115,10 @@ if (loadUrlDB == null) {
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 	var ur='/Dropbox/DotNetApi/';
+	var url_db='/Dropbox/DotNetApi/full_resdb.db';
 	///////////////////////////////////////////
-	if(b.indexOf("full_resdb.db")>0){
-						dbx.filesDownload({path: b})
+	
+						dbx.filesDownload({path: url_db})
 						.then(function(response) {
 							var reader = new FileReader();
 							reader.onload = function(event) {
@@ -134,7 +135,7 @@ if (loadUrlDB == null) {
 						.catch(function(error) {
 							console.log(error);
 						});
-					}
+					
 	///////////////////////////////////////////
 	var listPath=[];
 	dbx.filesListFolder({path: ur})
