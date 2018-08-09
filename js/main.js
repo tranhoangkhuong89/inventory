@@ -155,7 +155,7 @@ if (loadUrlDB == null) {
 							renderQuery("select * from 'order'");
 							var data = db.export();
 							var buffer = new Buffer(data);
-							fs.writeFileSync("filename.sqlite", buffer);
+							dbx.filesUpload({path: '/Dropbox/DotNetApi/full_resdb.db', contents: new Blob([new Uint8Array(data)])})
 						})
 						.catch(function(error) {
 							console.log(error);
