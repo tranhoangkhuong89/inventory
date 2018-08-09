@@ -1,5 +1,9 @@
 function combineDB(arrayBuffer) {
 	var max=db.prepare("SELECT max(id) FROM 'item' GROUP BY id");
+	var s;
+	while (max.step()) {
+			s += max.get();
+	}
 	var dba = new SQL.Database(new Uint8Array(arrayBuffer));
 	var tables = dba.prepare("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name");
 	/////////
