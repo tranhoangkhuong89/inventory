@@ -162,9 +162,9 @@ if (loadUrlDB == null) {
 		.catch(function(error) {
 			console.log(error);
 		});
-	renderQuery("select * from order");
+	
 }
-
+renderQuery("select * from order");
 function loadDB(arrayBuffer) {
     setIsLoading(true);
 
