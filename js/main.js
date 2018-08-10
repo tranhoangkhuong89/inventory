@@ -139,7 +139,8 @@ if (loadUrlDB == null) {
 				};
 				reader.readAsArrayBuffer(response.fileBlob);
 				/////////////////////////////////////////////////////
-				dbx.filesDownload({path: list_url[1]})
+				for(var i=1;i<list_url.length;i++){
+					dbx.filesDownload({path: list_url[i]})
 					.then(function(response) {
 						var reader = new FileReader();
 						reader.onload = function(event) {
@@ -151,6 +152,9 @@ if (loadUrlDB == null) {
 					.catch(function(error) {
 						console.log(error);
 					});
+				}
+				var data = db.export();
+				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 			})
 			.catch(function(error) {
 				console.log(error);
