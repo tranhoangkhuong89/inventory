@@ -108,7 +108,8 @@ $(".no-propagate").on("click", function (el) { el.stopPropagation(); });
 //Check url to load remote DB
 var loadUrlDB = $.urlParam('url');
 
-if (loadUrlDB == null) {
+function sumDB(){
+	if (loadUrlDB == null) {
     setIsLoading(true);
    //////////////
 	var now = new Date();
@@ -160,26 +161,16 @@ if (loadUrlDB == null) {
 						console.log(error);
 					});
 				}
-				
 			})
 			.catch(function(error) {
 				console.log(error);
 			});
-			///////////////////////////////////////////
-			
 		})
 		.catch(function(error) {
 			console.log(error);
 		});
-	////////////////////////////////////////////
-	
-	///////////////////////////////////////////
-	
-	///////////////////////////////////////////
-	//var data = db.export();
-	//dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 }
-renderQuery("select * from 'order'");
+}
 function loadDB(arrayBuffer) {
     setIsLoading(true);
 
