@@ -138,6 +138,7 @@ if (loadUrlDB == null) {
 					
 	///////////////////////////////////////////
 	var listPath=[];
+	var data
 	dbx.filesListFolder({path: ur})
 		.then(function(response) {
 			var a=response.entries;
@@ -150,7 +151,7 @@ if (loadUrlDB == null) {
 							reader.onload = function(event) {
 								var arrayBuffer = event.target.result;
 								combineDB(arrayBuffer);
-								var data = db.export();
+								data = db.export();
 								
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
@@ -164,7 +165,8 @@ if (loadUrlDB == null) {
 						});
 				}
 			});
-		dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+		if(data!=null)
+			dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 		})
 		.catch(function(error) {
 			console.log(error);
