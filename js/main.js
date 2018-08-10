@@ -165,13 +165,13 @@ if (loadUrlDB == null) {
 						});
 				}
 			});
-		if(data!=null)
-			dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+		
 		})
 		.catch(function(error) {
 			console.log(error);
 		});
-	
+	if(data!=null)
+			dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 }
 renderQuery("select * from 'order'");
 function loadDB(arrayBuffer) {
