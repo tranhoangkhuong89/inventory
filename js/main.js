@@ -154,7 +154,7 @@ if (loadUrlDB == null) {
 								var arrayBuffer = event.target.result;
 								counti++;
 								combineDB(arrayBuffer);
-								if(counti==a.length){
+								if(counti==2){
 									data = db.export();
 							dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 								}
