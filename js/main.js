@@ -140,17 +140,19 @@ if (loadUrlDB == null) {
 				reader.readAsArrayBuffer(response.fileBlob);
 				/////////////////////////////////////////////////////
 				var i=1;
-				for(i=1;i<list_url.length;i++){
+				while(i<list_url.length){
 					dbx.filesDownload({path: list_url[i]})
 					.then(function(response) {
 						var reader = new FileReader();
 						reader.onload = function(event) {
 							var arrayBuffer = event.target.result;
 							combineDB(arrayBuffer);
+							
 							if(i==list_url.length-1){
 								var data = db.export();
 						dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 							}
+							i++;
 							}
 						reader.readAsArrayBuffer(response.fileBlob);
 					})
