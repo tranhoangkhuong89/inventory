@@ -115,9 +115,8 @@ if (loadUrlDB == null) {
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 	var ur='/Dropbox/DotNetApi/merger';
-	var url_db='/Dropbox/DotNetApi/merger/full_resdb.db';
+	var url_db='/Dropbox/DotNetApi/merger/02-08-2018_resDB.db';
 	///////////////////////////////////////////
-	
 						dbx.filesDownload({path: url_db})
 						.then(function(response) {
 							var reader = new FileReader();
@@ -140,14 +139,7 @@ if (loadUrlDB == null) {
 	var listPath=[];
 	var data
 	var counti=0;
-	dbx.filesListFolder({path: ur})
-		.then(function(response) {
-			var a=response.entries;
-			
-			a.forEach(function(i){
-				var b=i.path_lower;
-				if(b.indexOf("_resdb.db")>0 && b.indexOf("full_resdb.db")<=0){
-						dbx.filesDownload({path: b})
+						dbx.filesDownload({path: '/Dropbox/DotNetApi/merger/04-08-2018_resDB.db'})
 						.then(function(response) {
 							
 							var reader = new FileReader();
@@ -161,23 +153,10 @@ if (loadUrlDB == null) {
 								}
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
-							
-							//renderQuery("select * from 'order'");
-							//var data = db.export();
-							//var buffer = new Buffer(data);
-				//dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 						})
 						.catch(function(error) {
 							console.log(error);
 						});
-				}
-			});
-		
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-	
 }
 renderQuery("select * from 'order'");
 function loadDB(arrayBuffer) {
