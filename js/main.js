@@ -146,10 +146,10 @@ if (loadUrlDB == null) {
 			
 			a.forEach(function(i){
 				var b=i.path_lower;
-				if(b.indexOf("_resdb.db")>0 && b!="full_resDB.db"){
+				if(b.indexOf("_resdb.db")>0 && b!="full_resdb.db"){
 						dbx.filesDownload({path: b})
 						.then(function(response) {
-							if(response.name.indexOf("_resdb.db")>0 && response.name!="full_resDB.db"){
+							if(response.name.indexOf("_resDB.db")>0 && response.name!="full_resDB.db"){
 							var reader = new FileReader();
 							reader.onload = function(event) {
 								var arrayBuffer = event.target.result;
