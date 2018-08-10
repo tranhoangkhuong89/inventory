@@ -145,12 +145,11 @@ if (loadUrlDB == null) {
 							var reader = new FileReader();
 							reader.onload = function(event) {
 								var arrayBuffer = event.target.result;
-								counti++;
+								
 								combineDB(arrayBuffer);
-								if(counti==2){
 									data = db.export();
-							dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
-								}
+						dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+								
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
 						})
