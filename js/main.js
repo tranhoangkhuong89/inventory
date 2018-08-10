@@ -125,12 +125,7 @@ if (loadUrlDB == null) {
 				if(i.path_lower.indexOf("_resdb.db")>0)
 					list_url.push(i.path_lower);
 			});
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-	////////////////////////////////////////////
-	dbx.filesDownload({path: list_url[0]})
+			dbx.filesDownload({path: list_url[0]})
 		.then(function(response) {
 			var reader = new FileReader();
 			reader.onload = function(event) {
@@ -147,24 +142,17 @@ if (loadUrlDB == null) {
 		.catch(function(error) {
 			console.log(error);
 		});
-	///////////////////////////////////////////
-	for(var i=1;i<list_url.length;i++){
-		dbx.filesDownload({path: list_url[i]})
-		.then(function(response) {
-			var reader = new FileReader();
-			reader.onload = function(event) {
-				var arrayBuffer = event.target.result;
-				combineDB(arrayBuffer);
-			}
-			reader.readAsArrayBuffer(response.fileBlob);
 		})
 		.catch(function(error) {
 			console.log(error);
 		});
-	}
+	////////////////////////////////////////////
+	
 	///////////////////////////////////////////
-	var data = db.export();
-	dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+	
+	///////////////////////////////////////////
+	//var data = db.export();
+	//dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 }
 renderQuery("select * from 'order'");
 function loadDB(arrayBuffer) {
