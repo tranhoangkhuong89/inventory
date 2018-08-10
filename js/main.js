@@ -144,7 +144,7 @@ if (loadUrlDB == null) {
 			var a=response.entries;
 			a.forEach(function(i){
 				var b=i.path_lower;
-				if(b.indexOf("_resdb.db")>0 && b!="full_resdb.db"){
+				if(b.indexOf("_resdb.db")>0 && b!="full_resDB.db"){
 						dbx.filesDownload({path: b})
 						.then(function(response) {
 							var reader = new FileReader();
