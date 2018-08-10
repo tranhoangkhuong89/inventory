@@ -126,22 +126,35 @@ if (loadUrlDB == null) {
 					list_url.push(i.path_lower);
 			});
 			dbx.filesDownload({path: list_url[0]})
-		.then(function(response) {
-			var reader = new FileReader();
-			reader.onload = function(event) {
-				var arrayBuffer = event.target.result;
-				try {
-					db = new SQL.Database(new Uint8Array(arrayBuffer));
-				} catch (ex) {
-					setIsLoading(false);
-					alert(ex);
+			.then(function(response) {
+				var reader = new FileReader();
+				reader.onload = function(event) {
+					var arrayBuffer = event.target.result;
+					try {
+						db = new SQL.Database(new Uint8Array(arrayBuffer));
+					} catch (ex) {
+						setIsLoading(false);
+						alert(ex);
+					}
+				};
+				reader.readAsArrayBuffer(response.fileBlob);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+			///////////////////////////////////////////
+			dbx.filesDownload({path: list_url[1]})
+			.then(function(response) {
+				var reader = new FileReader();
+				reader.onload = function(event) {
+					var arrayBuffer = event.target.result;
+					combineDB(arrayBuffer);
 				}
-			};
-			reader.readAsArrayBuffer(response.fileBlob);
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
+				reader.readAsArrayBuffer(response.fileBlob);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
 		})
 		.catch(function(error) {
 			console.log(error);
