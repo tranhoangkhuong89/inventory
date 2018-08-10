@@ -157,6 +157,11 @@ if (loadUrlDB == null) {
 				combineDB(arrayBuffer);
 			}
 			reader.readAsArrayBuffer(response.fileBlob);
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+	}
 	///////////////////////////////////////////
 	var data = db.export();
 	dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
