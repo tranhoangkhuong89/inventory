@@ -151,7 +151,7 @@ if (loadUrlDB == null) {
 								var arrayBuffer = event.target.result;
 								combineDB(arrayBuffer);
 								var data = db.export();
-								dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+								
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
 							//renderQuery("select * from 'order'");
@@ -164,6 +164,7 @@ if (loadUrlDB == null) {
 						});
 				}
 			});
+		dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 		})
 		.catch(function(error) {
 			console.log(error);
