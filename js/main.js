@@ -150,7 +150,7 @@ if (loadUrlDB == null) {
 							
 							if(k==list_url.length-1){
 								var data = db.export();
-						dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data, mode: 'overwrite'});
 							}
 							k++;
 							}
