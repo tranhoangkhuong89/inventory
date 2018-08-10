@@ -112,50 +112,54 @@ if (loadUrlDB == null) {
     setIsLoading(true);
    //////////////
 	var now = new Date();
+	var list_url=[];
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 	var ur='/Dropbox/DotNetApi/merger';
 	var url_db='/Dropbox/DotNetApi/merger/02-08-2018_resDB.db';
 	///////////////////////////////////////////
-						dbx.filesDownload({path: url_db})
-						.then(function(response) {
-							var reader = new FileReader();
-							reader.onload = function(event) {
-								var arrayBuffer = event.target.result;
-								try {
-								    db = new SQL.Database(new Uint8Array(arrayBuffer));
-								} catch (ex) {
-								    setIsLoading(false);
-								    alert(ex);
-								}
-							};
-							reader.readAsArrayBuffer(response.fileBlob);
-						})
-						.catch(function(error) {
-							console.log(error);
-						});
-					
+	dbx.filesListFolder({path: ur})
+		.then(function(response) {
+			var a=response.entries;
+			a.forEach(function(i){
+				if(i.path_lower.indexOf("_resdb.db")>0)
+					list_url.push(i.path_lower);
+			});
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+	////////////////////////////////////////////
+	dbx.filesDownload({path: list_url[0]})
+		.then(function(response) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				var arrayBuffer = event.target.result;
+				try {
+					db = new SQL.Database(new Uint8Array(arrayBuffer));
+				} catch (ex) {
+					setIsLoading(false);
+					alert(ex);
+				}
+			};
+			reader.readAsArrayBuffer(response.fileBlob);
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
 	///////////////////////////////////////////
-	var listPath=[];
-	var data
-	var counti=0;
-						dbx.filesDownload({path: '/Dropbox/DotNetApi/merger/04-08-2018_resDB.db'})
-						.then(function(response) {
-							
-							var reader = new FileReader();
-							reader.onload = function(event) {
-								var arrayBuffer = event.target.result;
-								
-								combineDB(arrayBuffer);
-									data = db.export();
-						dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
-								
-							};
-							reader.readAsArrayBuffer(response.fileBlob);
-						})
-						.catch(function(error) {
-							console.log(error);
-						});
+	for(var i=1;i<list_url.length;i++){
+		dbx.filesDownload({path: list_url[i]})
+		.then(function(response) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				var arrayBuffer = event.target.result;
+				combineDB(arrayBuffer);
+			}
+			reader.readAsArrayBuffer(response.fileBlob);
+	///////////////////////////////////////////
+	var data = db.export();
+	dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 }
 renderQuery("select * from 'order'");
 function loadDB(arrayBuffer) {
