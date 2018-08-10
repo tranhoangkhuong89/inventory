@@ -157,7 +157,7 @@ if (loadUrlDB == null) {
 							renderQuery("select * from 'order'");
 							var data = db.export();
 							//var buffer = new Buffer(data);
-				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
+				//dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 						})
 						.catch(function(error) {
 							console.log(error);
