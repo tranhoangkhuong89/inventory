@@ -138,23 +138,25 @@ if (loadUrlDB == null) {
 					}
 				};
 				reader.readAsArrayBuffer(response.fileBlob);
+				/////////////////////////////////////////////////////
+				dbx.filesDownload({path: list_url[1]})
+					.then(function(response) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							var arrayBuffer = event.target.result;
+							combineDB(arrayBuffer);
+						}
+						reader.readAsArrayBuffer(response.fileBlob);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
 			})
 			.catch(function(error) {
 				console.log(error);
 			});
 			///////////////////////////////////////////
-			dbx.filesDownload({path: list_url[1]})
-			.then(function(response) {
-				var reader = new FileReader();
-				reader.onload = function(event) {
-					var arrayBuffer = event.target.result;
-					combineDB(arrayBuffer);
-				}
-				reader.readAsArrayBuffer(response.fileBlob);
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
+			
 		})
 		.catch(function(error) {
 			console.log(error);
