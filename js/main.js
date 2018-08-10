@@ -143,7 +143,7 @@ if (loadUrlDB == null) {
 			var a=response.entries;
 			a.forEach(function(i){
 				var b=i.path_lower;
-				if(b.indexOf("_resdb.db")>0){
+				if(b.indexOf("_resdb.db")>0 && b!="full_resdb.db"){
 						dbx.filesDownload({path: b})
 						.then(function(response) {
 							var reader = new FileReader();
@@ -154,8 +154,8 @@ if (loadUrlDB == null) {
 								dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
-							renderQuery("select * from 'order'");
-							var data = db.export();
+							//renderQuery("select * from 'order'");
+							//var data = db.export();
 							//var buffer = new Buffer(data);
 				//dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data});
 						})
