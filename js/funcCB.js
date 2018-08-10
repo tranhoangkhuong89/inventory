@@ -41,14 +41,14 @@ function combineDB(arrayBuffer) {
 			   else{
 			   	var s = sel.get();
 		
-			var query2 = "INSERT INTO "+name+" values("+(s_count++)+",";
+			var query2 = "INSERT INTO "+name+" (name,price,sl,idorder) values(";//+(s_count++)+","
 		
 			for (var i = 1; i < s.length; i++) {
 					  query2+="'"+s[i]+"',";
 			}
 			query2=query2.replace(/.$/,")")
 			try {
-				var k=db.run("insert into item values(100,'bo bbq',60000,1,'abcxyz')");
+				var k=db.run(query2);//"insert into item values(100,'bo bbq',60000,1,'abcxyz')"
 			} 
 			catch (ex) {
 				showError(ex);
