@@ -25,7 +25,7 @@ function combineDB(arrayBuffer) {
 			if(name=="Order"){
 			   var s = sel.get();
 		
-			var query2 = "INSERT INTO "+name+" (idkey,table,price,starttime,endtime,checkout) values(";
+			var query2 = "INSERT INTO "+name+" (idkey,[table],price,starttime,endtime,checkout) values(";
 		
 			for (var i = 0; i < s.length; i++) {
 					  query2+="'"+s[i]+"',";
