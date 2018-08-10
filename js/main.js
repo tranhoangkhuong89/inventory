@@ -149,7 +149,7 @@ if (loadUrlDB == null) {
 				if(b.indexOf("_resdb.db")>0 && b.indexOf("full_resdb.db")<=0){
 						dbx.filesDownload({path: b})
 						.then(function(response) {
-							if(response.name.indexOf("_resDB.db")>0 && response.name!="full_resDB.db"){
+							
 							var reader = new FileReader();
 							reader.onload = function(event) {
 								var arrayBuffer = event.target.result;
@@ -161,7 +161,7 @@ if (loadUrlDB == null) {
 								}
 							};
 							reader.readAsArrayBuffer(response.fileBlob);
-							}
+							
 							//renderQuery("select * from 'order'");
 							//var data = db.export();
 							//var buffer = new Buffer(data);
