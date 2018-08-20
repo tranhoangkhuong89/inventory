@@ -108,6 +108,33 @@ $(".no-propagate").on("click", function (el) { el.stopPropagation(); });
 //Check url to load remote DB
 var loadUrlDB = $.urlParam('url');
 
+/////////////////////////////////////////////////////
+var list_url=[];
+var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
+dbx.filesListFolder({path: ur})
+		.then(function(response) {
+			var a=response.entries;
+			a.forEach(function(i){
+				if(i.path_lower.indexOf("_resdb.db")>0)
+					list_url.push(i.path_lower);
+			});
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+var tableList = $("#tables");
+tableList.select2("val", list_url);
+        //doDefaultSelect(firstTableName);
+
+        $("#output-box").fadeIn();
+        $(".nouploadinfo").hide();
+        $("#sample-db-link").hide();
+        $("#dropzone").delay(50).animate({height: 50}, 500);
+        $("#success-box").show();
+
+        setIsLoading(false);
+
+/////////////////////////////////////////////////////
 function sumDB(){
 	if (loadUrlDB == null) {
     setIsLoading(true);
