@@ -122,7 +122,7 @@ dbx.filesListFolder({path: ur})
 			
 			var tableList = $("#tables");
 			tableList.select2("val", list_url);
-			//doDefaultSelect(firstTableName);
+			doDefaultSelect(list_url[0]);
 
 			$("#output-box").fadeIn();
 			$(".nouploadinfo").hide();
