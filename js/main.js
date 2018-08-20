@@ -122,9 +122,8 @@ dbx.filesListFolder({path: ur})
 			
 			var tableList = $("#tables");
 	
-			while (list_url.step()) {
-			    var rowObj = list_url.getAsObject();
-			    var name = rowObj.name;
+			for (var i=0;i<list_url.length;i++) {
+			    var name = list_url[i];
 			    tableList.append('<option value="' + name + '">' + name +  '</option>');
 			}
 	
