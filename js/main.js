@@ -121,7 +121,14 @@ dbx.filesListFolder({path: ur})
 			});
 			
 			var tableList = $("#tables");
-			tableList.select2("val", list_url);
+	
+			while (list_url.step()) {
+			    var rowObj = list_url.getAsObject();
+			    var name = rowObj.name;
+			    tableList.append('<option value="' + name + '">' + name +  '</option>');
+			}
+	
+			tableList.select2("val", list_url[0]);
 			doDefaultSelect(list_url[0]);
 
 			$("#output-box").fadeIn();
