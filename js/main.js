@@ -109,6 +109,7 @@ $(".no-propagate").on("click", function (el) { el.stopPropagation(); });
 var loadUrlDB = $.urlParam('url');
 
 /////////////////////////////////////////////////////
+var ur='/Dropbox/DotNetApi/merger';
 var list_url=[];
 var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 dbx.filesListFolder({path: ur})
