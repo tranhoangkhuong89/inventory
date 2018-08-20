@@ -119,21 +119,23 @@ dbx.filesListFolder({path: ur})
 				if(i.path_lower.indexOf("_resdb.db")>0)
 					list_url.push(i.path_lower);
 			});
+			
+			var tableList = $("#tables");
+			tableList.select2("val", list_url);
+			//doDefaultSelect(firstTableName);
+
+			$("#output-box").fadeIn();
+			$(".nouploadinfo").hide();
+			$("#sample-db-link").hide();
+			$("#dropzone").delay(50).animate({height: 50}, 500);
+			$("#success-box").show();
+
+			setIsLoading(false);
 		})
 		.catch(function(error) {
 			console.log(error);
 		});
-var tableList = $("#tables");
-tableList.select2("val", list_url);
-        //doDefaultSelect(firstTableName);
 
-        $("#output-box").fadeIn();
-        $(".nouploadinfo").hide();
-        $("#sample-db-link").hide();
-        $("#dropzone").delay(50).animate({height: 50}, 500);
-        $("#success-box").show();
-
-        setIsLoading(false);
 
 /////////////////////////////////////////////////////
 function sumDB(){
