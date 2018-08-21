@@ -169,7 +169,7 @@ function sumDB(){
 	var fullfiles=$("#fullfiles").chosen().val();
 	var tables=$("#tables").chosen().val();
 	var full;
-	if(fullfiles.length>=1){
+	if(fullfiles!=null && fullfiles.length>=1){
 		full=fullfiles[0];
 	}
 	else{
