@@ -70,11 +70,7 @@
     <div id="output-box" class="container-fluid">
 
         <div class="row">
-            <div class="col-md-12">
-                <select id="tables" data-placeholder="Choose a country..." multiple class="chosen-select" title="Table">
-                    
-                </select><br />
-            </div>
+            
 
             <div class="col-md-11">
                 <div id="sql-editor" class="panel panel-default form-control"></div>
@@ -101,7 +97,7 @@
 
             </div>
             //////////////////////////////////
-            <script src="chosen.jquery.js" type="text/javascript"></script>
+            
             <script src="js/filereader.js"></script>
 <script src="js/sql.js"></script>
 <script src="js/select2.min.js"></script>
@@ -114,9 +110,18 @@
 <script src="js/mindmup-editabletable.js"></script>
 <script src="js/main.js?v=8"></script>
 <script src="js/funcCB.js"></script>
-    
+    <script src="chosen.jquery.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                $(function(){
+                $(".chosen-select").chosen();
+                    });
+            </script>
             ///////////////////////////////
-            
+            <div class="col-md-12">
+                <select id="tables" data-placeholder="Choose a country..." multiple class="chosen-select" title="Table">
+                    
+                </select><br />
+            </div>
             
 
         </div>
