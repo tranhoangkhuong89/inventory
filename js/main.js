@@ -9,7 +9,6 @@ var bottomBarDefaultPos = null, bottomBarDisplayStyle = null;
 var errorBox = $("#error");
 var lastCachedQueryCount = {};
 
-$(".chosen-select").chosen();
 
 $.urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
