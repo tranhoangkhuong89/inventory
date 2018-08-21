@@ -137,6 +137,35 @@ dbx.filesListFolder({path: ur})
 
 
 /////////////////////////////////////////////////////
+dbx.filesListFolder({path: ur})
+		.then(function(response) {
+			var a=response.entries;
+			a.forEach(function(i){
+					list_url.push(i.path_lower);
+			});
+			
+			var tableList = $("#fullfiles");
+	
+			for (var i=0;i<list_url.length;i++) {
+			    var name = list_url[i];
+			    tableList.append('<option value="' + name + '">' + name +  '</option>');
+			}
+	
+			tableList.select2("val", list_url[0]);
+			//doDefaultSelect(list_url[0]);
+
+			$(".chosen-files").chosen({width: "100%"});
+
+			setIsLoading(false);
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+
+
+/////////////////////////////////////////////////////
+
+
 function sumDB(){
 	if (loadUrlDB == null) {
     setIsLoading(true);
