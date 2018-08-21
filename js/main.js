@@ -165,28 +165,22 @@ dbx.filesListFolder({path: ur})
 
 
 /////////////////////////////////////////////////////
-
-
 function sumDB(){
-	var abc=$("#fullfiles").chosen().val();
+	var fullfiles=$("#fullfiles").chosen().val();
+	var full=fullfiles[0];
+	var tables=$("#tables").chosen().val();
 	if (loadUrlDB == null) {
     setIsLoading(true);
    //////////////
 	var now = new Date();
-	var list_url=[];
+	var list_url=tables;
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
 	var ur='/Dropbox/DotNetApi/merger';
 	var url_db='/Dropbox/DotNetApi/merger/02-08-2018_resDB.db';
 	///////////////////////////////////////////
-	dbx.filesListFolder({path: ur})
-		.then(function(response) {
-			var a=response.entries;
-			a.forEach(function(i){
-				if(i.path_lower.indexOf("_resdb.db")>0)
-					list_url.push(i.path_lower);
-			});
-			dbx.filesDownload({path: list_url[0]})
+	
+			dbx.filesDownload({path: full})
 			.then(function(response) {
 				var reader = new FileReader();
 				reader.onload = function(event) {
@@ -211,7 +205,7 @@ function sumDB(){
 							
 							if(k==list_url.length-1){
 								var data = db.export();
-				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb2.db', contents: data, mode: 'overwrite'});
+				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb.db', contents: data, mode: 'add'});
 							}
 							k++;
 							}
@@ -225,12 +219,11 @@ function sumDB(){
 			.catch(function(error) {
 				console.log(error);
 			});
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
+		
 }
 }
+
+
 function loadDB(arrayBuffer) {
     setIsLoading(true);
 
