@@ -212,7 +212,7 @@ function sumDB(){
 							
 							if(k==list_url.length-1){
 								var data = db.export();
-				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb.db', contents: data, mode: 'add'});
+				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb.db', contents: data, mode: 'add', autorename: true});
 							}
 							k++;
 							}
