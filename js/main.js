@@ -168,6 +168,7 @@ dbx.filesListFolder({path: ur})
 
 
 function sumDB(){
+	var abc=$("#fullfiles").chosen().val();
 	if (loadUrlDB == null) {
     setIsLoading(true);
    //////////////
