@@ -201,8 +201,8 @@ function sumDB(){
 				};
 				reader.readAsArrayBuffer(response.fileBlob);
 				/////////////////////////////////////////////////////
-				var k=1;
-				for(var i=1;i<list_url.length;i++){
+				var k=0;
+				for(var i=0;i<list_url.length;i++){
 					dbx.filesDownload({path: list_url[i]})
 					.then(function(response) {
 						var reader = new FileReader();
