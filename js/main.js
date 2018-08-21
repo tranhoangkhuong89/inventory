@@ -137,21 +137,22 @@ dbx.filesListFolder({path: ur})
 
 
 /////////////////////////////////////////////////////
+var list_url2=[];
 dbx.filesListFolder({path: ur})
 		.then(function(response) {
 			var a=response.entries;
 			a.forEach(function(i){
-					list_url.push(i.path_lower);
+					list_url2.push(i.path_lower);
 			});
 			
 			var tableList = $("#fullfiles");
 	
-			for (var i=0;i<list_url.length;i++) {
-			    var name = list_url[i];
+			for (var i=0;i<list_url2.length;i++) {
+			    var name = list_url2[i];
 			    tableList.append('<option value="' + name + '">' + name +  '</option>');
 			}
 	
-			tableList.select2("val", list_url[0]);
+			tableList.select2("val", list_url2[0]);
 			//doDefaultSelect(list_url[0]);
 
 			$(".chosen-files").chosen({width: "100%"});
