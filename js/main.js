@@ -213,6 +213,32 @@ function sumDB(){
 							if(k==list_url.length-1){
 								var data = db.export();
 				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb.db', contents: data, mode: 'add', autorename: true});
+							////////////
+								var list_url2=[];
+								dbx.filesListFolder({path: ur})
+										.then(function(response) {
+											var a=response.entries;
+											a.forEach(function(i){
+													list_url2.push(i.path_lower);
+											});
+
+											var tableList = $("#fullfiles");
+
+											for (var i=0;i<list_url2.length;i++) {
+											    var name = list_url2[i];
+											    tableList.append('<option value="' + name + '">' + name +  '</option>');
+											}
+
+											tableList.select2("val", list_url2[0]);
+											//doDefaultSelect(list_url[0]);
+
+											$(".chosen-files").chosen({width: "100%"});
+
+											setIsLoading(false);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
 							}
 							k++;
 							}
