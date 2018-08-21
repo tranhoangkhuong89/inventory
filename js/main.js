@@ -4,7 +4,7 @@ var SQL_SELECT_REGEX = /SELECT\s+[^;]+\s+FROM\s+/mi;
 
 var db = null;
 var rowCounts = [];
-var editor = ace.edit("sql-editor");
+//var editor = ace.edit("sql-editor");
 var bottomBarDefaultPos = null, bottomBarDisplayStyle = null;
 var errorBox = $("#error");
 var lastCachedQueryCount = {};
