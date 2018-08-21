@@ -111,14 +111,14 @@ dbx.filesListFolder({path: ur})
 				if(i.path_lower.indexOf("_resdb.db")>0)
 					list_url.push(i.path_lower);
 			});
-			
+
 			var tableList = $("#tables");
-	
+
 			for (var i=0;i<list_url.length;i++) {
 			    var name = list_url[i];
 			    tableList.append('<option value="' + name + '">' + name +  '</option>');
 			}
-	
+
 			tableList.select2("val", list_url[0]);
 			//doDefaultSelect(list_url[0]);
 
@@ -144,14 +144,14 @@ dbx.filesListFolder({path: ur})
 			a.forEach(function(i){
 					list_url2.push(i.path_lower);
 			});
-			
+
 			var tableList = $("#fullfiles");
-	
+
 			for (var i=0;i<list_url2.length;i++) {
 			    var name = list_url2[i];
 			    tableList.append('<option value="' + name + '">' + name +  '</option>');
 			}
-	
+
 			tableList.select2("val", list_url2[0]);
 			//doDefaultSelect(list_url[0]);
 
@@ -176,7 +176,7 @@ function sumDB(){
 		full=tables[0];
 		tables.splice(0, 1);
 	}
-	
+
 	if (loadUrlDB == null) {
     setIsLoading(true);
    //////////////
@@ -209,7 +209,7 @@ function sumDB(){
 						reader.onload = function(event) {
 							var arrayBuffer = event.target.result;
 							combineDB(arrayBuffer);
-							
+
 							if(k==list_url.length-1){
 								var data = db.export();
 				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb.db', contents: data, mode: 'add', autorename: true});
@@ -232,14 +232,13 @@ function sumDB(){
 											tableList.select2("val", list_url2[0]);
 											//doDefaultSelect(list_url[0]);
 
-											$(".chosen-files").trigger("chosen:updated");
-
 											setIsLoading(false);
 										})
 										.catch(function(error) {
 											console.log(error);
 										});
 							}
+              $(".chosen-files").trigger("chosen:updated");
 							k++;
 							}
 						reader.readAsArrayBuffer(response.fileBlob);
@@ -252,7 +251,7 @@ function sumDB(){
 			.catch(function(error) {
 				console.log(error);
 			});
-		
+
 }
 }
 
@@ -622,11 +621,11 @@ function renderQuery(query) {
 			var tt=price*sl;
 			total+=tt;
                   tr.append('<td><span title="' + htmlEncode(s[i]) + '">' + Number(tt).toLocaleString() + '</span></td>');
-               }    
+               }
                else{
                   tr.append('<td><span title="' + htmlEncode(s[i]) + '">' + htmlEncode(s[i]) + '</span></td>');
                }
-               
+
             }
         }
         tbody.append(tr);
@@ -642,5 +641,3 @@ function renderQuery(query) {
         positionFooter();
     }, 100);
 }
-
-
