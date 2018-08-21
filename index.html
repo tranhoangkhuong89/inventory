@@ -116,13 +116,13 @@
   <script src="docsupport/init.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
     $(function() {
-    $("#tables").chosen();
+    $(".chosen-select").chosen();
 });
 </script>
             ///////////////////////////////
             
             <div class="col-md-12">
-                <select multiple="true" id="tables" class="select" title="Table">
+                <select id="tables" data-placeholder="Choose a country..." multiple class="chosen-select" title="Table">
                     <option value="AC">A</option>
         <option value="AD">B</option>
         <option value="AM">C</option>
