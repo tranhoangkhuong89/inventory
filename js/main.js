@@ -131,7 +131,7 @@ dbx.filesListFolder({path: ur})
 			tableList.select2("val", list_url[0]);
 			//doDefaultSelect(list_url[0]);
 
-			$(".chosen-select").chosen({width: "95%"});
+			$(".chosen-select").chosen({width: "100%"});
 			$("#output-box").fadeIn();
 			$(".nouploadinfo").hide();
 			$("#sample-db-link").hide();
