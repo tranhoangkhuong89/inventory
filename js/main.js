@@ -232,7 +232,7 @@ function sumDB(){
 											tableList.select2("val", list_url2[0]);
 											//doDefaultSelect(list_url[0]);
 
-											$(".chosen-files").chosen({width: "100%"});
+											$(".chosen-files").trigger("chosen:updated");
 
 											setIsLoading(false);
 										})
