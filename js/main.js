@@ -167,8 +167,16 @@ dbx.filesListFolder({path: ur})
 /////////////////////////////////////////////////////
 function sumDB(){
 	var fullfiles=$("#fullfiles").chosen().val();
-	var full=fullfiles[0];
 	var tables=$("#tables").chosen().val();
+	var full;
+	if(fullfiles.length>=1){
+		full=fullfiles[0];
+	}
+	else{
+		full=tables[0];
+		tables.splice(0, 1);
+	}
+	
 	if (loadUrlDB == null) {
     setIsLoading(true);
    //////////////
@@ -179,7 +187,6 @@ function sumDB(){
 	var ur='/Dropbox/DotNetApi/merger';
 	var url_db='/Dropbox/DotNetApi/merger/02-08-2018_resDB.db';
 	///////////////////////////////////////////
-	
 			dbx.filesDownload({path: full})
 			.then(function(response) {
 				var reader = new FileReader();
@@ -222,7 +229,6 @@ function sumDB(){
 		
 }
 }
-
 
 function loadDB(arrayBuffer) {
     setIsLoading(true);
