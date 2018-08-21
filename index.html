@@ -56,28 +56,11 @@
     <div id="output-box" class="container-fluid">
 
         <div class="row">
-            <div class="col-md-11">
-                <div id="sql-editor" class="panel panel-default form-control"></div>
-            </div>
+            
             <div class="col-sm-1">
                 <button class="btn btn-sm btn-primary" id="sql-run" type="submit" onclick="executeSql(this)">List Orders</button>
             </div>
 
-            <div class="col-md-12">
-
-                <div style="">
-                    <table id="data" class="table table-condensed table-bordered table-hover table-striped">
-                        <thead>
-                        <tr></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div id="total"></div>
-                <div class="alert alert-danger box" id="error" style="display: none"></div>
-
-            </div>
-            
             <script src="js/filereader.js"></script>
 <script src="js/sql.js"></script>
 <script src="js/select2.min.js"></script>
