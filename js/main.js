@@ -90,15 +90,6 @@ if (typeof FileReader === "undefined") {
 }
 
 //Initialize editor
-editor.setTheme("ace/theme/chrome");
-editor.renderer.setShowGutter(false);
-editor.renderer.setShowPrintMargin(false);
-editor.renderer.setPadding(20);
-editor.renderer.setScrollMargin(8, 8, 0, 0);
-editor.setHighlightActiveLine(false);
-editor.getSession().setUseWrapMode(true);
-editor.getSession().setMode("ace/mode/sql");
-editor.setOptions({ maxLines: 5 });
 
 //Update pager position
 $(window).resize(windowResize).scroll(positionFooter);
