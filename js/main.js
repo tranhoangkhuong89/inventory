@@ -101,25 +101,25 @@ $(".no-propagate").on("click", function (el) { el.stopPropagation(); });
 var loadUrlDB = $.urlParam('url');
 
 /////////////////////////////////////////////////////
-var ur='/Dropbox/DotNetApi/merger';
-var list_url=[];
+var url_date='/Dropbox/DotNetApi';
+var list_date=[];
 var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
-dbx.filesListFolder({path: ur})
+dbx.filesListFolder({path: url_date})
 		.then(function(response) {
 			var a=response.entries;
 			a.forEach(function(i){
 				if(i.path_lower.indexOf("_resdb.db")>0)
-					list_url.push(i.path_lower);
+					list_date.push(i.path_lower);
 			});
 
 			var tableList = $("#tables");
 
-			for (var i=0;i<list_url.length;i++) {
-			    var name = list_url[i];
+			for (var i=0;i<list_date.length;i++) {
+			    var name = list_date[i];
 			    tableList.append('<option value="' + name + '">' + name +  '</option>');
 			}
 
-			tableList.select2("val", list_url[0]);
+			tableList.select2("val", list_date[0]);
 			//doDefaultSelect(list_url[0]);
 
 			$(".chosen-select").chosen({width: "100%"});
@@ -137,22 +137,23 @@ dbx.filesListFolder({path: ur})
 
 
 /////////////////////////////////////////////////////
-var list_url2=[];
-dbx.filesListFolder({path: ur})
+var url_full='/Dropbox/DotNetApi/full';
+var list_full=[];
+dbx.filesListFolder({path: url_full})
 		.then(function(response) {
 			var a=response.entries;
 			a.forEach(function(i){
-					list_url2.push(i.path_lower);
+					list_full.push(i.path_lower);
 			});
 
 			var tableList = $("#fullfiles");
 
-			for (var i=0;i<list_url2.length;i++) {
-			    var name = list_url2[i];
+			for (var i=0;i<list_full.length;i++) {
+			    var name = list_full[i];
 			    tableList.append('<option value="' + name + '">' + name +  '</option>');
 			}
 
-			tableList.select2("val", list_url2[0]);
+			tableList.select2("val", list_full[0]);
 			//doDefaultSelect(list_url[0]);
 
 			$(".chosen-files").chosen({width: "100%"});
@@ -166,6 +167,7 @@ dbx.filesListFolder({path: ur})
 
 /////////////////////////////////////////////////////
 function sumDB(){
+  $("#sql-run").prop('disabled', true);
 	var fullfiles=$("#fullfiles").chosen().val();
 	var tables=$("#tables").chosen().val();
 	var full;
@@ -184,7 +186,7 @@ function sumDB(){
 	var list_url=tables;
 	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
 	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
-	var ur='/Dropbox/DotNetApi/merger';
+	var ur='/Dropbox/DotNetApi';
 	var url_db='/Dropbox/DotNetApi/merger/02-08-2018_resDB.db';
 	///////////////////////////////////////////
 			dbx.filesDownload({path: full})
@@ -212,33 +214,20 @@ function sumDB(){
 
 							if(k==list_url.length-1){
 								var data = db.export();
-				dbx.filesUpload({path: '/Dropbox/DotNetApi/merger/full_resdb.db', contents: data, mode: 'add', autorename: true});
-							////////////
-								var list_url2=[];
-								dbx.filesListFolder({path: ur})
-										.then(function(response) {
-											var a=response.entries;
-											a.forEach(function(i){
-													list_url2.push(i.path_lower);
-											});
+				dbx.filesUpload({path: '/Dropbox/DotNetApi/full/full_resdb.db', contents: data, mode: 'overwrite'});
+        $("#ok").text("ok");
+        $("#sql-run").prop('disabled', false);
 
-											var tableList = $("#fullfiles");
-
-											for (var i=0;i<list_url2.length;i++) {
-											    var name = list_url2[i];
-											    tableList.append('<option value="' + name + '">' + name +  '</option>');
-											}
-
-											tableList.select2("val", list_url2[0]);
-											//doDefaultSelect(list_url[0]);
-
-											setIsLoading(false);
-										})
-										.catch(function(error) {
-											console.log(error);
-										});
+        // var a = document.createElement("a");
+        //             document.body.appendChild(a);
+        //             a.style = "display: none";
+        //     var blob = new Blob(data, {type: "application/octet-stream"}),
+        //         url = window.URL.createObjectURL(blob);
+        //     a.href = url;
+        //     a.download = "full_resdb.sql";
+        //     a.click();
+        //     window.URL.revokeObjectURL(url);
 							}
-              $(".chosen-files").trigger("chosen:updated");
 							k++;
 							}
 						reader.readAsArrayBuffer(response.fileBlob);
