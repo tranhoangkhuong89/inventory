@@ -8,7 +8,11 @@ var rowCounts = [];
 var bottomBarDefaultPos = null, bottomBarDisplayStyle = null;
 var errorBox = $("#error");
 var lastCachedQueryCount = {};
+var countTongsd=0;
+var slTong=0;
 
+$('#dtpfromdate').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+$('#dtptodate').datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 
 $.urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -98,150 +102,181 @@ windowResize();
 $(".no-propagate").on("click", function (el) { el.stopPropagation(); });
 
 //Check url to load remote DB
-var loadUrlDB = $.urlParam('url');
 
-/////////////////////////////////////////////////////
-var url_date='/Dropbox/DotNetApi';
-var list_date=[];
-var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
-dbx.filesListFolder({path: url_date})
-		.then(function(response) {
-			var a=response.entries;
-			a.forEach(function(i){
-				if(i.path_lower.indexOf("_resdb.db")>0)
-					list_date.push(i.path_lower);
-			});
+function tinhTonkho(tonkho){
+  var frdate=$("#dtpfromdate").val();
+  var ttdate=$("#dtptodate").val();
 
-			var tableList = $("#tables");
-
-			for (var i=0;i<list_date.length;i++) {
-			    var name = list_date[i];
-			    tableList.append('<option value="' + name + '">' + name +  '</option>');
-			}
-
-			tableList.select2("val", list_date[0]);
-			//doDefaultSelect(list_url[0]);
-
-			$(".chosen-select").chosen({width: "100%"});
-			$("#output-box").fadeIn();
-			$(".nouploadinfo").hide();
-			$("#sample-db-link").hide();
-			$("#dropzone").delay(50).animate({height: 50}, 500);
-			$("#success-box").show();
-
-			setIsLoading(false);
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-
-
-/////////////////////////////////////////////////////
-var url_full='/Dropbox/DotNetApi/full';
-var list_full=[];
-dbx.filesListFolder({path: url_full})
-		.then(function(response) {
-			var a=response.entries;
-			a.forEach(function(i){
-					list_full.push(i.path_lower);
-			});
-
-			var tableList = $("#fullfiles");
-
-			for (var i=0;i<list_full.length;i++) {
-			    var name = list_full[i];
-			    tableList.append('<option value="' + name + '">' + name +  '</option>');
-			}
-
-			tableList.select2("val", list_full[0]);
-			//doDefaultSelect(list_url[0]);
-
-			$(".chosen-files").chosen({width: "100%"});
-
-			setIsLoading(false);
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-
-
-/////////////////////////////////////////////////////
-function sumDB(){
-  $("#sql-run").prop('disabled', true);
+  $("#btnTonkho").prop('disabled', true);
 	var fullfiles=$("#fullfiles").chosen().val();
 	var tables=$("#tables").chosen().val();
 	var full;
-	if(fullfiles!=null && fullfiles.length>=1){
-		full=fullfiles[0];
-	}
-	else{
-		full=tables[0];
-		tables.splice(0, 1);
-	}
+  var fname="";
 
-	if (loadUrlDB == null) {
     setIsLoading(true);
-   //////////////
+    //////////////////////////////
 	var now = new Date();
+  var tong;
 	var list_url=tables;
-	var dt=now.toLocaleDateString('en-GB').split('/').join('-');
-	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
-	var ur='/Dropbox/DotNetApi';
-	var url_db='/Dropbox/DotNetApi/merger/02-08-2018_resDB.db';
-	///////////////////////////////////////////
-			dbx.filesDownload({path: full})
-			.then(function(response) {
-				var reader = new FileReader();
-				reader.onload = function(event) {
-					var arrayBuffer = event.target.result;
-					try {
-						db = new SQL.Database(new Uint8Array(arrayBuffer));
-					} catch (ex) {
-						setIsLoading(false);
-						alert(ex);
-					}
-				};
-				reader.readAsArrayBuffer(response.fileBlob);
-				/////////////////////////////////////////////////////
-				var k=0;
-				for(var i=0;i<list_url.length;i++){
-					dbx.filesDownload({path: list_url[i]})
-					.then(function(response) {
-						var reader = new FileReader();
-						reader.onload = function(event) {
-							var arrayBuffer = event.target.result;
-							combineDB(arrayBuffer);
+  if(tonkho!=0){
+    var dt=now.toLocaleDateString('en-GB').split('/').join('-');
+  	var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
+    var url_inven='/Dropbox/DotNetApi/inventory';
 
-							if(k==list_url.length-1){
-								var data = db.export();
-				dbx.filesUpload({path: '/Dropbox/DotNetApi/full/full_resdb.db', contents: data, mode: 'overwrite'});
-        $("#ok").text("ok");
-        $("#sql-run").prop('disabled', false);
+    dbx.filesListFolder({path: url_inven})
+    		.then(function(response) {
+    			var a=response.entries;
+          var date=new Date(frdate.split('-')[2]+"-"+frdate.split('-')[1]+"-"+frdate.split('-')[0]);
 
-        // var a = document.createElement("a");
-        //             document.body.appendChild(a);
-        //             a.style = "display: none";
-        //     var blob = new Blob(data, {type: "application/octet-stream"}),
-        //         url = window.URL.createObjectURL(blob);
-        //     a.href = url;
-        //     a.download = "full_resdb.sql";
-        //     a.click();
-        //     window.URL.revokeObjectURL(url);
-							}
-							k++;
-							}
-						reader.readAsArrayBuffer(response.fileBlob);
-					})
-					.catch(function(error) {
-						console.log(error);
-					});
-				}
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
+    			a.forEach(function(i){
+    				if(i.path_lower.indexOf("_resinven.db")>0){
+              var filename = i.path_lower.substring(i.path_lower.lastIndexOf('/')+1);
+              var d=filename.split('_')[0];
+              var dt=new Date(d.split('-')[2]+'-'+d.split('-')[1]+'-'+d.split('-')[0]);
+              if(dt>=date){
+                fname=filename;
+                date=dt;
+              }
+            }
+    			});
+
+              $("#txtFromdate").text(fname.split('_')[0]);
+
+          getslTong(fname,"tblbo");
+
+    		})
+    		.catch(function(error) {
+    			console.log(error);
+    		});
+  }
+  else{
+
+    $("#txtFromdate").text(frdate);
+    getslTong(fname,"tblbo");
+  }
+
 
 }
+
+function getslTong(filename,tbl){
+  var ttdate=$("#dtptodate").val();
+  var dbb;
+  if(filename!=""){
+    var url_db='/Dropbox/DotNetApi/inventory/'+filename;
+    var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
+    dbx.filesDownload({path: url_db})
+    .then(function(response) {
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        var arrayBuffer = event.target.result;
+        try {
+            dbb = new SQL.Database(new Uint8Array(arrayBuffer));
+            c = dbb.prepare("select sltong from "+tbl);
+            while (c.step()) {
+                 var ab= c.get();
+                 slTong=Number(ab.toString());
+                 $("#txtTDK").text(slTong);
+            }
+
+          tinhSudung(filename.split('_')[0],ttdate);
+        } catch (ex) {
+          setIsLoading(false);
+          alert(ex);
+        }
+      };
+      reader.readAsArrayBuffer(response.fileBlob);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+  }
+  else {
+    tinhSudung($("#dtpfromdate").val(),ttdate);
+  }
+}
+
+function tinhSudung(fromdate,todate){
+  var tongBo=0;
+  var fdd = fromdate.split('-')[0];
+  var fmm = fromdate.split('-')[1];
+  var fyyyy = fromdate.split('-')[2];
+  var fdate=fyyyy+"-"+fmm+"-"+fdd;
+  var tdate;
+  if(todate==null)
+    {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1; //January is 0!
+      var yyyy = today.getFullYear();
+      tdate=yyyy+"-"+mm+"-"+dd;
+    }
+    else{
+      var dd = todate.split('-')[0];
+      var mm = todate.split('-')[1];
+      var yyyy = todate.split('-')[2];
+      var tdate=yyyy+"-"+mm+"-"+dd;
+    }
+$("#txtTodate").text(dd+"-"+mm+"-"+yyyy);
+    var listdate=[];
+    var url_folder='/Dropbox/DotNetApi/days';
+var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
+    dbx.filesListFolder({path: url_folder})
+    		.then(function(response) {
+    			var a=response.entries;
+          var ffdate=new Date(fdate);
+          var ttdate=new Date(tdate);
+
+    			a.forEach(function(i){
+    				if(i.path_lower.indexOf("_resdb.db")>0){
+              var filename = i.path_lower.substring(i.path_lower.lastIndexOf('/')+1);
+              var d=filename.split('_')[0];
+              var dt=new Date(d.split('-')[2]+'-'+d.split('-')[1]+'-'+d.split('-')[0]);
+              if(dt>=ffdate && dt<=ttdate){
+                countBo(i);
+              }
+            }
+    			});
+
+    		})
+    		.catch(function(error) {
+    			console.log(error);
+    		});
+}
+
+function countBo(file){
+  var c;
+  var countB;
+  var dbb;
+  var url_db='/Dropbox/DotNetApi/days/'+file.name;
+  var dbx = new Dropbox.Dropbox({ accessToken: 'jNfuqaYoI3AAAAAAAAAAqvr96aupCnGYWhhPaL2m6A0r6UxWV4nBF8XwARehWV25', fetch: fetch });
+  dbx.filesDownload({path: url_db})
+  .then(function(response) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      var arrayBuffer = event.target.result;
+      try {
+        dbb = new SQL.Database(new Uint8Array(arrayBuffer));
+        c = dbb.prepare("select sum(i.sl) from item i where i.name like 'Bò%'");
+        while (c.step()) {
+             var ab= c.get();
+             var aaa=Number(ab.toString());
+             countTongsd=countTongsd+aaa;
+        }
+        $("#txtSudung").text(countTongsd);
+        if(slTong!=0)
+          $("#txtTonkho").text(slTong-countTongsd);
+
+      } catch (ex) {
+        setIsLoading(false);
+        alert(ex);
+        //return 0;
+      }
+    };
+    reader.readAsArrayBuffer(response.fileBlob);
+})
+.catch(function(error) {
+  console.log(error);
+});
 }
 
 function loadDB(arrayBuffer) {
